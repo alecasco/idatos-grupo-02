@@ -1,61 +1,71 @@
 package domain;
 
+import java.util.List;
+
 public class MercadoLibreProperty {
-    private String titulo;
-    private Integer precio;
-    private String permalink;
+    private double precio;
     private String direccion;
     private String barrio;
+    private String m2;
+    private String titulo;
+    private String tipo; //Apartamento o casa
+    private String cantBanios;
+    private String cantDormitorios;
+    private Contacto contacto;
 
-    public MercadoLibreProperty(String title, Integer precio, String permalink, String direccion, String barrio) {
-        this.titulo = title;
+    public MercadoLibreProperty(double precio,
+                                String direccion,
+                                String barrio,
+                                String m2,
+                                String titulo,
+                                String tipo,
+                                String cantBanios,
+                                String cantDormitorios,
+                                Contacto contacto) {
         this.precio = precio;
-        this.permalink = permalink;
         this.direccion = direccion;
         this.barrio = barrio;
-    }
-
-    public String getTitulo() {
-        return titulo;
-    }
-
-    public void setTitulo(String titulo) {
+        this.m2 = m2;
         this.titulo = titulo;
+        this.tipo = tipo;
+        this.cantBanios = cantBanios;
+        this.cantDormitorios = cantDormitorios;
+        this.contacto = contacto;
     }
 
-    public Integer getPrecio() {
+    public double getPrecio() {
         return precio;
-    }
-
-    public void setPrecio(Integer precio) {
-        this.precio = precio;
-    }
-
-    public String getPermalink() {
-        return permalink;
-    }
-
-    public void setPermalink(String permalink) {
-        this.permalink = permalink;
     }
 
     public String getDireccion() {
         return direccion;
     }
 
-    public void setDireccion(String direccion) {
-        this.direccion = direccion;
-    }
-
     public String getBarrio() {
         return barrio;
     }
 
-    public void setBarrio(String barrio) {
-        this.barrio = barrio;
+    public String getM2() {
+        return m2;
     }
 
-    public void printProperty() {
-        System.out.println("Propiedad: "+ this.titulo +" / "+ this.precio +" / "+ this.barrio +" / "+ this.direccion +" / "+ this.permalink);
+    public String getTitulo() {
+        return titulo;
+    }
+
+    public String getTipo() {
+        return tipo;
+    }
+
+    public String getCantBanios() {
+        return cantBanios;
+    }
+
+    public String getCantDormitorios() {
+        return cantDormitorios;
+    }
+
+    public Contacto getContacto() {
+        return contacto;
     }
 }
