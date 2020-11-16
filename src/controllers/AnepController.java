@@ -17,7 +17,6 @@ public class AnepController {
     private List<AnepCenter> anepCenters = new ArrayList<>();
 
     public void LoadCentros() {
-        System.out.println("Comienza la carga de los centros de ANEP");
         try {
             //Get the Excel File
             FileInputStream file = new FileInputStream(
@@ -40,8 +39,6 @@ public class AnepController {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
-        } finally {
-            System.out.println("Finaliza la carga de los centros de ANEP, total: " + anepCenters.size());
         }
     }
 
