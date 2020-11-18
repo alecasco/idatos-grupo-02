@@ -20,7 +20,7 @@ import java.util.List;
 public class MercadoLibreController {
 
     public List<MercadoLibreProperty> LoadAlojamientos(String idBarrio) throws IOException {
-        System.out.println("Obtener alojamientos en Pocitos desde Mercado Libre");
+        System.out.println("Obtener alojamientos en "+idBarrio+" desde Mercado Libre");
         List<MercadoLibreProperty> mercadoLibreProperties = new ArrayList<>();
 
         try {
