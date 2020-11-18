@@ -1,6 +1,8 @@
 import controllers.AnepController;
+import controllers.InfoCasasController;
 import controllers.MercadoLibreController;
 import controllers.RDFModelController;
+import domain.InfocasasProperty;
 import domain.MercadoLibreProperty;
 
 import java.io.Console;
@@ -15,6 +17,10 @@ public class Application {
 
         AnepController anepController = new AnepController();
         anepController.LoadCentros();
+
+        InfoCasasController infoCasasController = new InfoCasasController();
+        infoCasasController.loadInfocasasProperties();
+
 
         //while (barrio != "salir") {
             System.out.println("Bienvenido, seleccione un barrio:");
@@ -44,6 +50,13 @@ public class Application {
         for (AnepCenter a: centrosEnPocitos) {
             System.out.println(a.getNombre());
         }*/
+
+        /* PRUEBA */
+        List<InfocasasProperty> propiedadesInfocasas = infoCasasController.findProperties("Cordón");
+        System.out.println("Propiedades infocasas en Cordón:");
+        for (InfocasasProperty a: propiedadesInfocasas) {
+            System.out.println(a.getPrecio());
+        }
 
             String idBarrio = null;
             switch (barrio) {

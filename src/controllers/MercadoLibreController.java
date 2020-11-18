@@ -39,11 +39,9 @@ public class MercadoLibreController {
                 response.append('\r');
             }
             rd.close();
-            System.out.println("RQ: " + url + response.toString());
 
             JSONObject obj = new JSONObject(response.toString());
             JSONArray results = obj.getJSONArray("results");
-            System.out.println("RESULTS: " + results);
             for (int i = 0; i < results.length(); i++) {
                 JSONObject item = results.getJSONObject(i);
                 mercadoLibreProperties.add(
