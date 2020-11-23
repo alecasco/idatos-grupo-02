@@ -25,7 +25,7 @@ public class MercadoLibreController {
 
         try {
 
-            URL url = new URL("https://api.mercadolibre.com/sites/MLU/search?q=apartamento&category=MLU1459&city=" + idBarrio);
+            URL url = new URL("https://api.mercadolibre.com/sites/MLU/search?category=MLU1459&city=" + idBarrio);
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod("GET");
             connection.setRequestProperty("accept", "application/json");
@@ -51,7 +51,7 @@ public class MercadoLibreController {
                                 item.getJSONObject("address").getString("city_name"),
                                 buscarPropiedad(item.getJSONArray("attributes"), "COVERED_AREA"),
                                 item.getString("title"),
-                                buscarPropiedad(item.getJSONArray("attributes"), "PROPERTY_TYPE"),
+                                buscarPropiedad(item.getJSONArray("attributes"), "PROPERTY_TYPE").equals("Apartamento") ? "Apartment" : "House",
                                 buscarPropiedad(item.getJSONArray("attributes"), "FULL_BATHROOMS"),
                                 buscarPropiedad(item.getJSONArray("attributes"), "BEDROOMS"),
                                 new Contacto(item.getJSONObject("seller_contact").getString("contact"),
