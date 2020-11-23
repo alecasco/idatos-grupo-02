@@ -13,7 +13,6 @@ public class InfocasasProperty {
     private double cantBanios;
     private double cantDormitorios;
     private Contacto contacto;
-    private int garages;
 
     public InfocasasProperty(Row row) {
         this.precio = row.getCell(0, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK).getNumericCellValue();
@@ -26,7 +25,6 @@ public class InfocasasProperty {
         this.cantBanios = row.getCell(6, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK).getNumericCellValue();
         this.cantDormitorios = row.getCell(7, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK).getNumericCellValue();
         this.contacto = new Contacto(row.getCell(13, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK).getStringCellValue(), String.valueOf(row.getCell(14, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK).getNumericCellValue()));
-        this.garages = (int) row.getCell(8, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK).getNumericCellValue();
 
     }
 
@@ -109,13 +107,5 @@ public class InfocasasProperty {
 
     public void setContacto(Contacto contacto) {
         this.contacto = contacto;
-    }
-
-    public int getGarages() {
-        return garages;
-    }
-
-    public void setGarages(int garages) {
-        this.garages = garages;
     }
 }

@@ -1,6 +1,7 @@
 package controllers;
 
 import domain.MercadoLibreProperty;
+import dto.VCARDCustomized;
 import org.apache.jena.query.Query;
 import org.apache.jena.query.QueryExecution;
 import org.apache.jena.query.QueryExecutionFactory;
@@ -26,23 +27,26 @@ public class RDFModelController {
     Model model;
 
     public void LoadRDF(List<MercadoLibreProperty> inmueblesMeli) {
+        String exampleURI = "http://example.org/";
+        String dbPediaURI ="http://dbpedia.org/page/";
+
         model = ModelFactory.createDefaultModel();
-        String baseURI = "http://example.org/";
+
         for (int i=0; i<inmueblesMeli.size(); i++) {
             MercadoLibreProperty inmueble = inmueblesMeli.get(i);
-            model.createResource(normalizar(baseURI + inmueble.getTitulo()))
-                    .addProperty(VCARD.Street, normalizar(baseURI + inmueble.getDireccion()))
-                    .addProperty(VCARD.Locality, normalizar(baseURI + inmueble.getBarrio()))
-                    // FALTA m2
-                    .addProperty(VCARD.TITLE, normalizar(baseURI + inmueble.getTitulo()))
-                    .addProperty(RDF.type, normalizar(baseURI + inmueble.getTipo()))
-                    // FALTA cantBanios
-                    // FALTA cantDormitorios
-                    .addProperty(VCARD.Given, // TODO CHEQUEAR CÓMO PONER CONTACTO
+            model.createResource(normalizar(exampleURI + inmueble.getTitulo()))
+                    .addProperty(VCARDCustomized.PRICE, exampleURI + inmueble.getPrecio())
+                    .addProperty(VCARD.Street, normalizar(exampleURI + inmueble.getDireccion()))
+                    .addProperty(VCARDCustomized.NEIGHBORHOOD, normalizar(dbPediaURI + inmueble.getBarrio()))
+                    .addProperty(VCARDCustomized.M2, normalizar(exampleURI + inmueble.getM2()))
+                    .addProperty(VCARD.TITLE, normalizar(exampleURI + inmueble.getTitulo()))
+                    .addProperty(RDF.type, normalizar(dbPediaURI + inmueble.getTipo()))
+                    .addProperty(VCARDCustomized.BATHROOMS, normalizar(exampleURI + inmueble.getCantBanios()))
+                    .addProperty(VCARDCustomized.ROOMS, normalizar(exampleURI + inmueble.getCantDormitorios()))
+                    .addProperty(VCARDCustomized.CONTACT,
                             model.createResource()
-                                    .addProperty(VCARD.NAME, normalizar(baseURI + inmueble.getContacto().getNombre()))
-                                    .addProperty(VCARD.TEL, normalizar(baseURI + inmueble.getContacto().getTelefono())));
-                    // FALTA GARAGES
+                                    .addProperty(VCARD.NAME, normalizar(exampleURI + inmueble.getContacto().getNombre()))
+                                    .addProperty(VCARD.TEL, normalizar(exampleURI + inmueble.getContacto().getTelefono())));
         }
 
         model.write(System.out);
