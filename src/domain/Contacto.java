@@ -8,4 +8,12 @@ public class Contacto {
         this.nombre = nombre;
         this.telefono = telefono;
     }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public String getTelefono() {
+        return telefono;
+    }
 }

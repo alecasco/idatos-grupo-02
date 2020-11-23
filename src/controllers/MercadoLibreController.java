@@ -50,7 +50,7 @@ public class MercadoLibreController {
                         new MercadoLibreProperty(
                                 item.getDouble("price"),
                                 item.getJSONObject("location").getString("address_line"),
-                                item.getJSONObject("location").getJSONObject("neighborhood").getString("name"),
+                                item.getJSONObject("address").getString("city_name"),
                                 buscarPropiedad(item.getJSONArray("attributes"), "COVERED_AREA"),
                                 item.getString("title"),
                                 buscarPropiedad(item.getJSONArray("attributes"), "PROPERTY_TYPE"),
