@@ -5,8 +5,10 @@ import controllers.RDFModelController;
 import domain.InfocasasProperty;
 import domain.MercadoLibreProperty;
 
+import java.io.BufferedReader;
 import java.io.Console;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.List;
 
 public class Application {
@@ -23,7 +25,7 @@ public class Application {
         infoCasasController.loadInfocasasProperties();
 
 
-        //while (barrio != "salir") {
+        while (barrio != "salir") {
             System.out.println("Bienvenido, seleccione un barrio:");
             System.out.println("1. Carrasco");
             System.out.println("2. Punta Gorda");
@@ -43,15 +45,10 @@ public class Application {
             System.out.println("16. La blanqueada");
             System.out.println("salir");
             System.out.println();
+            System.out.println("Ingrese el numero de barrio: ");
 
-            barrio = "1";// console.readLine();
-
-            /* PRUEBA
-            List<AnepCenter> centrosEnPocitos = anepController.findCenters("Montevideo", "Montevideo", "Pocitos");
-            System.out.println("Centros en Pocitos:");
-            for (AnepCenter a: centrosEnPocitos) {
-                System.out.println(a.getNombre());
-            }*/
+            BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+            barrio = reader.readLine();
 
             String idBarrio = null;
             switch (barrio) {
@@ -123,6 +120,8 @@ public class Application {
                     System.out.println("Barrio no soportado");
             }
 
+            System.out.println("Barrio seleccionado: "+ nombreBarrio);
+
             if (idBarrio != null) {
                 MercadoLibreController mercadoLibreController = new MercadoLibreController();
                 List<MercadoLibreProperty> inmueblesMeli = mercadoLibreController.LoadAlojamientos(idBarrio);
@@ -138,9 +137,9 @@ public class Application {
                 RDFModelController rdfModelController = new RDFModelController();
                 rdfModelController.LoadRDF(inmueblesMeli, propiedadesInfocasas);
             } else {
-                barrio = console.readLine();
+                barrio = reader.readLine();
             }
-        //}
+        }
 
         System.out.println("Chau chau");
     }
