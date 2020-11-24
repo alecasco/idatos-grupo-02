@@ -80,9 +80,9 @@ public class RDFModelController {
     }
 
     private String normalizarDireccionInfocasas(DireccionInfoCasas direccionInfoCasas) {
-        String direccion = normalizar(direccionInfoCasas.getCalle()) + " " + direccionInfoCasas.getNumeroPuerta();
-        if (direccionInfoCasas.getApartamento() != 0) {
-            direccion += " apto " + direccionInfoCasas.getApartamento();
+        String direccion = normalizar(direccionInfoCasas.getCalle()) + "_" + direccionInfoCasas.getNumeroPuerta();
+        if (!direccionInfoCasas.getApartamento().equals("0")) {
+            direccion += "_apto_" + direccionInfoCasas.getApartamento();
         }
         return direccion;
     }
