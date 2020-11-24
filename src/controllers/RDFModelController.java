@@ -34,19 +34,19 @@ public class RDFModelController {
 
         for (int i=0; i<inmueblesMeli.size(); i++) {
             MercadoLibreProperty inmueble = inmueblesMeli.get(i);
-            model.createResource(normalizar(exampleURI + inmueble.getTitulo()))
+            model.createResource(exampleURI + normalizar(inmueble.getTitulo()))
                     .addProperty(VCARDCustomized.PRICE, exampleURI + inmueble.getPrecio())
-                    .addProperty(VCARD.Street, normalizar(exampleURI + inmueble.getDireccion()))
-                    .addProperty(VCARDCustomized.NEIGHBORHOOD, normalizar(dbPediaURI + inmueble.getBarrio()))
-                    .addProperty(VCARDCustomized.M2, normalizar(exampleURI + inmueble.getM2()))
-                    .addProperty(VCARD.TITLE, normalizar(exampleURI + inmueble.getTitulo()))
-                    .addProperty(RDF.type, normalizar(dbPediaURI + inmueble.getTipo()))
-                    .addProperty(VCARDCustomized.BATHROOMS, normalizar(exampleURI + inmueble.getCantBanios()))
-                    .addProperty(VCARDCustomized.ROOMS, normalizar(exampleURI + inmueble.getCantDormitorios()))
+                    .addProperty(VCARD.Street, exampleURI + normalizar(inmueble.getDireccion()))
+                    .addProperty(VCARDCustomized.NEIGHBORHOOD, dbPediaURI + normalizar(inmueble.getBarrio()))
+                    .addProperty(VCARDCustomized.M2, exampleURI + normalizar(inmueble.getM2()))
+                    .addProperty(VCARD.TITLE, exampleURI + normalizar(inmueble.getTitulo()))
+                    .addProperty(RDF.type, dbPediaURI + normalizar(inmueble.getTipo()))
+                    .addProperty(VCARDCustomized.BATHROOMS, exampleURI + normalizar(inmueble.getCantBanios()))
+                    .addProperty(VCARDCustomized.ROOMS, exampleURI + normalizar(inmueble.getCantDormitorios()))
                     .addProperty(VCARDCustomized.CONTACT,
                             model.createResource()
-                                    .addProperty(VCARD.NAME, normalizar(exampleURI + inmueble.getContacto().getNombre()))
-                                    .addProperty(VCARD.TEL, normalizar(exampleURI + inmueble.getContacto().getTelefono())));
+                                    .addProperty(VCARD.NAME, exampleURI + normalizar(inmueble.getContacto().getNombre()))
+                                    .addProperty(VCARD.TEL, exampleURI + normalizar(inmueble.getContacto().getTelefono())));
         }
 
         model.write(System.out);
