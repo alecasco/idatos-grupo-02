@@ -10,8 +10,8 @@ public class InfocasasProperty {
     private String titulo;
     private String descripcion;
     private String tipo; //Apartamento o casa
-    private double cantBanios;
-    private double cantDormitorios;
+    private String cantBanios;
+    private String cantDormitorios;
     private Contacto contacto;
 
     public InfocasasProperty(Row row) {
@@ -22,9 +22,9 @@ public class InfocasasProperty {
         this.titulo = row.getCell(2, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK).getStringCellValue();
         this.descripcion = row.getCell(3, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK).getStringCellValue();
         this.tipo = row.getCell(4, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK).getStringCellValue();
-        this.cantBanios = row.getCell(6, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK).getNumericCellValue();
-        this.cantDormitorios = row.getCell(7, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK).getNumericCellValue();
-        this.contacto = new Contacto(row.getCell(13, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK).getStringCellValue(), String.valueOf(row.getCell(14, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK).getNumericCellValue()));
+        this.cantBanios = row.getCell(6, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK).getStringCellValue();
+        this.cantDormitorios = row.getCell(7, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK).getStringCellValue();
+        this.contacto = new Contacto(row.getCell(13, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK).getStringCellValue(), String.valueOf(row.getCell(14, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK).getStringCellValue()));
 
     }
 
@@ -85,19 +85,19 @@ public class InfocasasProperty {
         this.tipo = tipo;
     }
 
-    public double getCantBanios() {
+    public String getCantBanios() {
         return cantBanios;
     }
 
-    public void setCantBanios(double cantBanios) {
+    public void setCantBanios(String cantBanios) {
         this.cantBanios = cantBanios;
     }
 
-    public double getCantDormitorios() {
+    public String getCantDormitorios() {
         return cantDormitorios;
     }
 
-    public void setCantDormitorios(double cantDormitorios) {
+    public void setCantDormitorios(String cantDormitorios) {
         this.cantDormitorios = cantDormitorios;
     }
 

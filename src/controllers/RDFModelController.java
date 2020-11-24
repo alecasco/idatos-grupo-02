@@ -1,5 +1,7 @@
 package controllers;
 
+import domain.DireccionInfoCasas;
+import domain.InfocasasProperty;
 import domain.MercadoLibreProperty;
 import dto.VCARDCustomized;
 import org.apache.jena.query.Query;
@@ -26,19 +28,34 @@ public class RDFModelController {
 
     Model model;
 
-    public void LoadRDF(List<MercadoLibreProperty> inmueblesMeli) {
+    public void LoadRDF(List<MercadoLibreProperty> inmueblesMeli, List<InfocasasProperty> inmueblesInfocasas) {
         String exampleURI = "http://example.org/";
         String dbPediaURI ="http://dbpedia.org/page/";
 
         model = ModelFactory.createDefaultModel();
 
-        for (int i=0; i<inmueblesMeli.size(); i++) {
-            MercadoLibreProperty inmueble = inmueblesMeli.get(i);
+        for (MercadoLibreProperty inmueble : inmueblesMeli) {
             model.createResource(exampleURI + normalizar(inmueble.getTitulo()))
                     .addProperty(VCARDCustomized.PRICE, exampleURI + inmueble.getPrecio())
                     .addProperty(VCARD.Street, exampleURI + normalizar(inmueble.getDireccion()))
                     .addProperty(VCARDCustomized.NEIGHBORHOOD, dbPediaURI + normalizar(inmueble.getBarrio()))
                     .addProperty(VCARDCustomized.M2, exampleURI + normalizar(inmueble.getM2()))
+                    .addProperty(VCARD.TITLE, exampleURI + normalizar(inmueble.getTitulo()))
+                    .addProperty(RDF.type, dbPediaURI + normalizar(inmueble.getTipo()))
+                    .addProperty(VCARDCustomized.BATHROOMS, exampleURI + normalizar(inmueble.getCantBanios()))
+                    .addProperty(VCARDCustomized.ROOMS, exampleURI + normalizar(inmueble.getCantDormitorios()))
+                    .addProperty(VCARDCustomized.CONTACT,
+                            model.createResource()
+                                    .addProperty(VCARD.NAME, exampleURI + normalizar(inmueble.getContacto().getNombre()))
+                                    .addProperty(VCARD.TEL, exampleURI + normalizar(inmueble.getContacto().getTelefono())));
+        }
+
+        for (InfocasasProperty inmueble : inmueblesInfocasas) {
+            model.createResource(exampleURI + normalizar(inmueble.getTitulo()))
+                    .addProperty(VCARDCustomized.PRICE, exampleURI + inmueble.getPrecio())
+                    .addProperty(VCARD.Street, exampleURI + normalizarDireccionInfocasas(inmueble.getDireccion()))
+                    .addProperty(VCARDCustomized.NEIGHBORHOOD, dbPediaURI + normalizar(inmueble.getBarrio()))
+                    .addProperty(VCARDCustomized.M2, exampleURI + normalizar(String.valueOf(inmueble.getM2())))
                     .addProperty(VCARD.TITLE, exampleURI + normalizar(inmueble.getTitulo()))
                     .addProperty(RDF.type, dbPediaURI + normalizar(inmueble.getTipo()))
                     .addProperty(VCARDCustomized.BATHROOMS, exampleURI + normalizar(inmueble.getCantBanios()))
@@ -60,6 +77,14 @@ public class RDFModelController {
                 .replace('í','i')
                 .replace('ó','o')
                 .replace('ú','u');
+    }
+
+    private String normalizarDireccionInfocasas(DireccionInfoCasas direccionInfoCasas) {
+        String direccion = normalizar(direccionInfoCasas.getCalle()) + " " + direccionInfoCasas.getNumeroPuerta();
+        if (direccionInfoCasas.getApartamento() != 0) {
+            direccion += " apto " + direccionInfoCasas.getApartamento();
+        }
+        return direccion;
     }
 
     public void filtroPorBarrio(String barrio) {

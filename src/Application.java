@@ -136,7 +136,7 @@ public class Application {
                 System.out.println();
 
                 RDFModelController rdfModelController = new RDFModelController();
-                rdfModelController.LoadRDF(inmueblesMeli);
+                rdfModelController.LoadRDF(inmueblesMeli, propiedadesInfocasas);
             } else {
                 barrio = console.readLine();
             }
