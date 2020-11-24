@@ -2,11 +2,11 @@ package domain;
 
 public class DireccionInfoCasas {
     private String calle;
-    private double numeroPuerta;
-    private double apartamento;
+    private String numeroPuerta;
+    private String apartamento;
     private double piso;
 
-    public DireccionInfoCasas(String calle, double numeroPuerta, double apartamento, double piso) {
+    public DireccionInfoCasas(String calle, String numeroPuerta, String apartamento, double piso) {
         this.calle = calle;
         this.numeroPuerta = numeroPuerta;
         this.apartamento = apartamento;
@@ -21,19 +21,19 @@ public class DireccionInfoCasas {
         this.calle = calle;
     }
 
-    public double getNumeroPuerta() {
+    public String getNumeroPuerta() {
         return numeroPuerta;
     }
 
-    public void setNumeroPuerta(double numeroPuerta) {
+    public void setNumeroPuerta(String numeroPuerta) {
         this.numeroPuerta = numeroPuerta;
     }
 
-    public double getApartamento() {
+    public String getApartamento() {
         return apartamento;
     }
 
-    public void setApartamento(double apartamento) {
+    public void setApartamento(String apartamento) {
         this.apartamento = apartamento;
     }
 
