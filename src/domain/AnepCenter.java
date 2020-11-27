@@ -3,6 +3,7 @@ package domain;
 import org.apache.poi.ss.usermodel.Row;
 
 public class AnepCenter {
+    private String id;
     private String nombre;
     private String deptoNumero;
     private String deptoNombre;
@@ -44,7 +45,12 @@ public class AnepCenter {
         return telefono;
     }
 
+    public String getId() {
+        return id;
+    }
+
     public AnepCenter(Row row) {
+        this.id = String.valueOf(row.getCell(0, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK).getNumericCellValue());
         this.nombre = row.getCell(4, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK).getStringCellValue();
         this.deptoNumero = row.getCell(5, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK).getStringCellValue();
         this.deptoNombre = row.getCell(6, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK).getStringCellValue();

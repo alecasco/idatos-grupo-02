@@ -10,6 +10,7 @@ public class VCARDCustomized {
      */
     public static final String dbPediaURI ="http://dbpedia.org/page/";
     public static final String schemaURI ="https://schema.org/";
+    public static final String exampleURI = "http://example.org/";
 
     private static final Model m = ModelFactory.createDefaultModel();
 
@@ -19,4 +20,8 @@ public class VCARDCustomized {
     public static final Property BATHROOMS = m.createProperty(dbPediaURI + "Bathroom");
     public static final Property ROOMS = m.createProperty(dbPediaURI + "Room");
     public static final Property CONTACT = m.createProperty(schemaURI + "ContactPoint");
+
+    public static final Property STATE_NUMBER = m.createProperty(dbPediaURI + "StateNumber");
+    public static final Property STATE_NAME = m.createProperty(schemaURI + "StateName");
+    public static final Property STREET_NUMBER = m.createProperty(exampleURI + "StreetNumber");
 }

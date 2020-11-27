@@ -6,7 +6,6 @@ import domain.InfocasasProperty;
 import domain.MercadoLibreProperty;
 
 import java.io.BufferedReader;
-import java.io.Console;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.List;
@@ -16,7 +15,6 @@ public class Application {
     public static void main(String[] args) throws IOException {
         String barrio = "";
         String nombreBarrio = null;
-        Console console = System.console();
 
         AnepController anepController = new AnepController();
         anepController.LoadCentros();
@@ -26,7 +24,6 @@ public class Application {
 
         String idBarrio = null;
         while (!barrio.equals("salir")) {
-            idBarrio = null;
             System.out.println("Bienvenido, seleccione un barrio:");
             System.out.println("1. Carrasco");
             System.out.println("2. Punta Gorda");
@@ -46,7 +43,7 @@ public class Application {
             System.out.println("16. La blanqueada");
             System.out.println("salir");
             System.out.println();
-            System.out.println("Ingrese el numero de barrio: ");
+            System.out.print("Ingrese el numero de barrio: ");
 
             BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
             barrio = reader.readLine();
@@ -129,15 +126,9 @@ public class Application {
                     List<MercadoLibreProperty> inmueblesMeli = mercadoLibreController.LoadAlojamientos(idBarrio);
 
                     List<InfocasasProperty> propiedadesInfocasas = infoCasasController.findProperties(nombreBarrio);
-                    System.out.println("Propiedades Infocasas en " + nombreBarrio + ": ");
-                    for (InfocasasProperty a : propiedadesInfocasas) {
-                        System.out.println(a.getPrecio());
-                    }
-                    System.out.println();
-                    System.out.println();
 
                     RDFModelController rdfModelController = new RDFModelController();
-                    rdfModelController.LoadRDF(inmueblesMeli, propiedadesInfocasas);
+                    rdfModelController.LoadinmueblesRDF(inmueblesMeli, propiedadesInfocasas);
 
                     System.out.println();
                     System.out.println("-------------------------------------------------------------------------");
