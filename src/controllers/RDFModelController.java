@@ -1,5 +1,6 @@
 package controllers;
 
+import domain.AnepCenter;
 import domain.DireccionInfoCasas;
 import domain.InfocasasProperty;
 import domain.MercadoLibreProperty;
@@ -13,12 +14,8 @@ import org.apache.jena.query.ResultSet;
 import org.apache.jena.rdf.model.Literal;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.ModelFactory;
-import org.apache.jena.rdf.model.Property;
 import org.apache.jena.rdf.model.RDFNode;
 import org.apache.jena.rdf.model.Resource;
-import org.apache.jena.rdf.model.Statement;
-import org.apache.jena.rdf.model.StmtIterator;
-import org.apache.jena.vocabulary.DC_10;
 import org.apache.jena.vocabulary.RDF;
 import org.apache.jena.vocabulary.VCARD;
 
@@ -26,16 +23,17 @@ import java.util.List;
 
 public class RDFModelController {
 
-    Model model;
+    Model inmueblesModel;
+    Model anepModel;
 
-    public void LoadRDF(List<MercadoLibreProperty> inmueblesMeli, List<InfocasasProperty> inmueblesInfocasas) {
+    public void LoadinmueblesRDF(List<MercadoLibreProperty> inmueblesMeli, List<InfocasasProperty> inmueblesInfocasas) {
         String exampleURI = "http://example.org/";
         String dbPediaURI ="http://dbpedia.org/page/";
 
-        model = ModelFactory.createDefaultModel();
+        inmueblesModel = ModelFactory.createDefaultModel();
 
         for (MercadoLibreProperty inmueble : inmueblesMeli) {
-            model.createResource(exampleURI + normalizar(inmueble.getTitulo()))
+            inmueblesModel.createResource(exampleURI + normalizar(inmueble.getTitulo()))
                     .addProperty(VCARDCustomized.PRICE, exampleURI + inmueble.getPrecio())
                     .addProperty(VCARD.Street, exampleURI + normalizar(inmueble.getDireccion()))
                     .addProperty(VCARDCustomized.NEIGHBORHOOD, dbPediaURI + normalizar(inmueble.getBarrio()))
@@ -45,13 +43,13 @@ public class RDFModelController {
                     .addProperty(VCARDCustomized.BATHROOMS, exampleURI + normalizar(inmueble.getCantBanios()))
                     .addProperty(VCARDCustomized.ROOMS, exampleURI + normalizar(inmueble.getCantDormitorios()))
                     .addProperty(VCARDCustomized.CONTACT,
-                            model.createResource()
+                            inmueblesModel.createResource()
                                     .addProperty(VCARD.NAME, exampleURI + normalizar(inmueble.getContacto().getNombre()))
                                     .addProperty(VCARD.TEL, exampleURI + normalizar(inmueble.getContacto().getTelefono())));
         }
 
         for (InfocasasProperty inmueble : inmueblesInfocasas) {
-            model.createResource(exampleURI + normalizar(inmueble.getTitulo()))
+            inmueblesModel.createResource(exampleURI + normalizar(inmueble.getTitulo()))
                     .addProperty(VCARDCustomized.PRICE, exampleURI + inmueble.getPrecio())
                     .addProperty(VCARD.Street, exampleURI + normalizarDireccionInfocasas(inmueble.getDireccion()))
                     .addProperty(VCARDCustomized.NEIGHBORHOOD, dbPediaURI + normalizar(inmueble.getBarrio()))
@@ -61,12 +59,33 @@ public class RDFModelController {
                     .addProperty(VCARDCustomized.BATHROOMS, exampleURI + normalizar(inmueble.getCantBanios()))
                     .addProperty(VCARDCustomized.ROOMS, exampleURI + normalizar(inmueble.getCantDormitorios()))
                     .addProperty(VCARDCustomized.CONTACT,
-                            model.createResource()
+                            inmueblesModel.createResource()
                                     .addProperty(VCARD.NAME, exampleURI + normalizar(inmueble.getContacto().getNombre()))
                                     .addProperty(VCARD.TEL, exampleURI + normalizar(inmueble.getContacto().getTelefono())));
         }
 
-        model.write(System.out);
+        //inmueblesModel.write(System.out);
+    }
+
+    public void LoadANEPRDF(List<AnepCenter> anepCenters) {
+        String exampleURI = "http://example.org/";
+        String dbPediaURI ="http://dbpedia.org/page/";
+
+        anepModel = ModelFactory.createDefaultModel();
+
+        for (AnepCenter centroANEP : anepCenters) {
+            anepModel.createResource(exampleURI + normalizar(centroANEP.getId()))
+                    .addProperty(VCARD.NAME, exampleURI + normalizar(centroANEP.getNombre()))
+                    .addProperty(VCARDCustomized.STATE_NUMBER, exampleURI + normalizar(centroANEP.getDeptoNumero()))
+                    .addProperty(VCARDCustomized.STATE_NAME, exampleURI + normalizar(centroANEP.getDeptoNombre()))
+                    .addProperty(VCARD.Locality, exampleURI + normalizar(centroANEP.getLocalidad()))
+                    .addProperty(VCARDCustomized.NEIGHBORHOOD, dbPediaURI + normalizar(centroANEP.getBarrio()))
+                    .addProperty(VCARD.Street, exampleURI + normalizar(centroANEP.getCalle()))
+                    .addProperty(VCARDCustomized.STREET_NUMBER, exampleURI + normalizar(centroANEP.getNumeroPuerta()))
+                    .addProperty(VCARD.TEL, exampleURI + normalizar(centroANEP.getTelefono()));
+        }
+
+        //anepModel.write(System.out);
     }
 
     private String normalizar(String sentencia) {
@@ -90,7 +109,7 @@ public class RDFModelController {
     public void filtroPorBarrio(String barrio) {
         String queryString = barrio;
         Query query = QueryFactory.create(queryString) ;
-        try (QueryExecution qexec = QueryExecutionFactory.create(query, model)) {
+        try (QueryExecution qexec = QueryExecutionFactory.create(query, inmueblesModel)) {
             ResultSet results = qexec.execSelect() ;
             for ( ; results.hasNext() ; )
             {

@@ -35,6 +35,9 @@ public class AnepController {
                 anepCenters.add(new AnepCenter(row));
             }
 
+            RDFModelController rdfModelController = new RDFModelController();
+            rdfModelController.LoadANEPRDF(anepCenters);
+
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
