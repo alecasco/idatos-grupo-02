@@ -113,4 +113,19 @@ public class RDFModelController {
             }
         }
     }
+
+    public void filtroAnepPorBarrio(String barrio) {
+        System.out.println();
+        System.out.println("RDF QUERY ANEP");
+        String queryString = "SELECT ?x WHERE { ?x  <http://dbpedia.org/page/Neighbourhood>  \"http://dbpedia.org/page/"+barrio.toUpperCase()+"\"}";
+        Query query = QueryFactory.create(queryString) ;
+        try (QueryExecution qexec = QueryExecutionFactory.create(query, anepModel)) {
+            ResultSet results = qexec.execSelect() ;
+            for ( ; results.hasNext() ; )
+            {
+                QuerySolution soln = results.nextSolution() ;
+                System.out.println(soln);
+            }
+        }
+    }
 }

@@ -2,6 +2,7 @@ import controllers.AnepController;
 import controllers.InfoCasasController;
 import controllers.MercadoLibreController;
 import controllers.RDFModelController;
+import domain.AnepCenter;
 import domain.InfocasasProperty;
 import domain.MercadoLibreProperty;
 
@@ -137,8 +138,11 @@ public class Application {
                     RDFModelController rdfModelController = new RDFModelController();
                     rdfModelController.LoadinmueblesRDF(inmueblesMeli, propiedadesInfocasas);
 
+                    List<AnepCenter> anepCenters = anepController.findCenters("Montevideo", "Montevideo", nombreBarrio);
+                    rdfModelController.LoadANEPRDF(anepCenters);
 
                     rdfModelController.filtroPorBarrio(nombreBarrio, dormitorios, banios);
+                    rdfModelController.filtroAnepPorBarrio(nombreBarrio);
 
                     System.out.println();
                     System.out.println("-------------------------------------------------------------------------");
