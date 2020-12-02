@@ -1,7 +1,5 @@
 package domain;
 
-import java.util.List;
-
 public class MercadoLibreProperty {
     private double precio;
     private String direccion;
@@ -12,6 +10,7 @@ public class MercadoLibreProperty {
     private String cantBanios;
     private String cantDormitorios;
     private Contacto contacto;
+    private String link;
 
     public MercadoLibreProperty(double precio,
                                 String direccion,
@@ -21,7 +20,8 @@ public class MercadoLibreProperty {
                                 String tipo,
                                 String cantBanios,
                                 String cantDormitorios,
-                                Contacto contacto) {
+                                Contacto contacto,
+                                String link) {
         this.precio = precio;
         this.direccion = direccion;
         this.barrio = barrio;
@@ -31,6 +31,7 @@ public class MercadoLibreProperty {
         this.cantBanios = cantBanios;
         this.cantDormitorios = cantDormitorios;
         this.contacto = contacto;
+        this.link = link;
     }
 
     public double getPrecio() {
@@ -67,5 +68,9 @@ public class MercadoLibreProperty {
 
     public Contacto getContacto() {
         return contacto;
+    }
+    
+    public String getLink() {
+        return link;
     }
 }

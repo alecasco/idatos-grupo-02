@@ -69,7 +69,7 @@ public class Application {
                         break;
                     case "3":
                         idBarrio = "TUxVQ01BTDE0YmY1";
-                        nombreBarrio = "Malvín";
+                        nombreBarrio = "Malvin";
                         break;
                     case "4":
                         idBarrio = "TUxVQ0JVQzNlMDdl";
@@ -85,7 +85,7 @@ public class Application {
                         break;
                     case "7":
                         idBarrio = "TUxVQ1BBUmU3Y2Nj";
-                        nombreBarrio = "Parque Rodó";
+                        nombreBarrio = "Parque Rodo";
                         break;
                     case "8":
                         idBarrio = "TUxVQ1BBTDU0NzY";
@@ -97,7 +97,7 @@ public class Application {
                         break;
                     case "10":
                         idBarrio = "TUxVQ0NPUjZmZjNm";
-                        nombreBarrio = "Cordón";
+                        nombreBarrio = "Cordon";
                         break;
                     case "11":
                         idBarrio = "TUxVQ0NFTjVjMTM";
@@ -141,7 +141,7 @@ public class Application {
                     List<AnepCenter> anepCenters = anepController.findCenters("Montevideo", "Montevideo", nombreBarrio);
                     rdfModelController.LoadANEPRDF(anepCenters);
 
-                    rdfModelController.filtroPorBarrio(nombreBarrio, dormitorios, banios);
+                    rdfModelController.filtroInmuebles(dormitorios, banios);
                     rdfModelController.filtroAnepPorBarrio(nombreBarrio);
 
                     System.out.println();

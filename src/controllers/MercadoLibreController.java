@@ -54,7 +54,8 @@ public class MercadoLibreController {
                                 buscarPropiedad(item.getJSONArray("attributes"), "FULL_BATHROOMS"),
                                 buscarPropiedad(item.getJSONArray("attributes"), "BEDROOMS"),
                                 new Contacto(item.getJSONObject("seller_contact").getString("contact"),
-                                        item.getJSONObject("seller_contact").getString("phone"))
+                                        item.getJSONObject("seller_contact").getString("phone")),
+                                item.getString("permalink")
                         ));
             }
 
