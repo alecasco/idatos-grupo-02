@@ -5,17 +5,9 @@ import domain.DireccionInfoCasas;
 import domain.InfocasasProperty;
 import domain.MercadoLibreProperty;
 import dto.VCARDCustomized;
-import org.apache.jena.query.Query;
-import org.apache.jena.query.QueryExecution;
-import org.apache.jena.query.QueryExecutionFactory;
-import org.apache.jena.query.QueryFactory;
-import org.apache.jena.query.QuerySolution;
-import org.apache.jena.query.ResultSet;
-import org.apache.jena.rdf.model.Literal;
+import org.apache.jena.query.*;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.ModelFactory;
-import org.apache.jena.rdf.model.RDFNode;
-import org.apache.jena.rdf.model.Resource;
 import org.apache.jena.vocabulary.RDF;
 import org.apache.jena.vocabulary.VCARD;
 
@@ -106,17 +98,33 @@ public class RDFModelController {
         return direccion;
     }
 
-    public void filtroPorBarrio(String barrio) {
-        String queryString = barrio;
+    public void filtroPorBarrio(String barrio, String dormitorios,String banios) {
+        System.out.println();
+        System.out.println("RDF QUERY");
+        String queryString = "SELECT ?x WHERE { ?x  <http://dbpedia.org/page/Bathroom>  \"http://example.org/"+banios+"\" ." +
+                " ?x  <http://dbpedia.org/page/Room>  \"http://example.org/"+dormitorios+"\"}";
         Query query = QueryFactory.create(queryString) ;
         try (QueryExecution qexec = QueryExecutionFactory.create(query, inmueblesModel)) {
             ResultSet results = qexec.execSelect() ;
             for ( ; results.hasNext() ; )
             {
                 QuerySolution soln = results.nextSolution() ;
-                RDFNode x = soln.get("varName") ;       // Get a result variable by name.
-                Resource r = soln.getResource("VarR") ; // Get a result variable - must be a resource
-                Literal l = soln.getLiteral("VarL") ;   // Get a result variable - must be a literal
+                System.out.println(soln);
+            }
+        }
+    }
+
+    public void filtroAnepPorBarrio(String barrio) {
+        System.out.println();
+        System.out.println("RDF QUERY ANEP");
+        String queryString = "SELECT ?x WHERE { ?x  <http://dbpedia.org/page/Neighbourhood>  \"http://dbpedia.org/page/"+barrio.toUpperCase()+"\"}";
+        Query query = QueryFactory.create(queryString) ;
+        try (QueryExecution qexec = QueryExecutionFactory.create(query, anepModel)) {
+            ResultSet results = qexec.execSelect() ;
+            for ( ; results.hasNext() ; )
+            {
+                QuerySolution soln = results.nextSolution() ;
+                System.out.println(soln);
             }
         }
     }

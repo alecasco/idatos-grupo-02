@@ -2,6 +2,7 @@ import controllers.AnepController;
 import controllers.InfoCasasController;
 import controllers.MercadoLibreController;
 import controllers.RDFModelController;
+import domain.AnepCenter;
 import domain.InfocasasProperty;
 import domain.MercadoLibreProperty;
 
@@ -14,6 +15,8 @@ public class Application {
 
     public static void main(String[] args) throws IOException {
         String barrio = "";
+        String dormitorios = "";
+        String banios = "";
         String nombreBarrio = null;
 
         AnepController anepController = new AnepController();
@@ -49,6 +52,12 @@ public class Application {
             barrio = reader.readLine();
 
             if (!barrio.equals("salir")) {
+                System.out.print("Ingrese la cantidad de dormitorios: ");
+                dormitorios = reader.readLine();
+
+                System.out.print("Ingrese la cantidad de baños: ");
+                banios = reader.readLine();
+
                 switch (barrio) {
                     case "1":
                         idBarrio = "TUxVQ0NBUmRhYWU0";
@@ -120,7 +129,6 @@ public class Application {
 
                 System.out.println("Barrio seleccionado: "+ nombreBarrio);
 
-
                 if (idBarrio != null) {
                     MercadoLibreController mercadoLibreController = new MercadoLibreController();
                     List<MercadoLibreProperty> inmueblesMeli = mercadoLibreController.LoadAlojamientos(idBarrio);
@@ -129,6 +137,12 @@ public class Application {
 
                     RDFModelController rdfModelController = new RDFModelController();
                     rdfModelController.LoadinmueblesRDF(inmueblesMeli, propiedadesInfocasas);
+
+                    List<AnepCenter> anepCenters = anepController.findCenters("Montevideo", "Montevideo", nombreBarrio);
+                    rdfModelController.LoadANEPRDF(anepCenters);
+
+                    rdfModelController.filtroPorBarrio(nombreBarrio, dormitorios, banios);
+                    rdfModelController.filtroAnepPorBarrio(nombreBarrio);
 
                     System.out.println();
                     System.out.println("-------------------------------------------------------------------------");
