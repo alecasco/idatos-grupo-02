@@ -42,7 +42,7 @@ public class RDFModelController {
         }
 
         for (InfocasasProperty inmueble : inmueblesInfocasas) {
-            inmueblesModel.createResource(exampleURI + normalizar(inmueble.getTitulo()))
+            inmueblesModel.createResource(inmueble.getLink())
                     .addProperty(VCARDCustomized.PRICE, exampleURI + inmueble.getPrecio())
                     .addProperty(VCARD.Street, exampleURI + normalizarDireccionInfocasas(inmueble.getDireccion()))
                     .addProperty(VCARDCustomized.NEIGHBORHOOD, dbPediaURI + normalizar(inmueble.getBarrio()))
